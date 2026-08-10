@@ -1,20 +1,191 @@
-"first_name","company","email","status","subject","greeting","opener","problem","point_1","point_2","point_3","how_we_help","cta","signoff","notes"
+"first_name","company","email","status","subject","greeting","opener","problem","point_1","point_2","point_3","how_we_help","cta","signoff","full_email","notes"
 "Mike","Cloudflare","mogden@cloudflare.com","SEND-READY","pipeline context","Hi Mike,","Was listening to you talk about your ""Revenue Map"" and the idea that everyone owns pipeline. That probably means a lot of people are looking at the same deals from very different angles.","But even then, the newest buyer update can still sit in someone's inbox while Salesforce shows an older version of the deal.","what changed since the last buyer conversation","which deals are starting to lose momentum","what the rep has committed to do next","That's what we've been helping RevOps teams with - making sure emails and meetings land on the right Salesforce records, and flagging deals that may be starting to slow.","Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?","Best,
+Sijhah","Subject: pipeline context
+
+Hi Mike,
+
+Was listening to you talk about your ""Revenue Map"" and the idea that everyone owns pipeline. That probably means a lot of people are looking at the same deals from very different angles.
+
+But even then, the newest buyer update can still sit in someone's inbox while Salesforce shows an older version of the deal.
+
+So, usually, there are three things the team needs to know:
+
+- what changed since the last buyer conversation
+- which deals are starting to lose momentum
+- what the rep has committed to do next
+
+That's what we've been helping RevOps teams with - making sure emails and meetings land on the right Salesforce records, and flagging deals that may be starting to slow.
+
+Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?
+
+Best,
 Sijhah","Strongest signal: verified Jan 2026 podcast quote."
 "Amanda","Cloudflare","amanda@cloudflare.com","SEND-READY","forecast context","Hi Amanda,","Looks like you're about six months into leading Americas Revenue Operations at Cloudflare now. That probably means you're still building the clearest possible view of the funnel across the region.","And by forecast time, one missing buyer update can make a deal look different from what's actually happening.","what changed since the last forecast update","which deals are losing buyer activity","what the rep has committed to do next","That's what we've been helping RevOps teams with - keeping the latest emails and meetings in Salesforce, and making forecast changes easier to explain.","Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?","Best,
+Sijhah","Subject: forecast context
+
+Hi Amanda,
+
+Looks like you're about six months into leading Americas Revenue Operations at Cloudflare now. That probably means you're still building the clearest possible view of the funnel across the region.
+
+And by forecast time, one missing buyer update can make a deal look different from what's actually happening.
+
+So, usually, there are three things the team needs to know:
+
+- what changed since the last forecast update
+- which deals are losing buyer activity
+- what the rep has committed to do next
+
+That's what we've been helping RevOps teams with - keeping the latest emails and meetings in Salesforce, and making forecast changes easier to explain.
+
+Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?
+
+Best,
 Sijhah","Signal is the recent job change (no first-party quote found)."
 "Martin","Cloudflare","mkielczewski@cloudflare.com","SEND-READY","deal context","Hi Martin,","Saw that you look after GTM planning and the comp side of things at Cloudflare. That work probably lives or dies on how clean the underlying deal data is.","But even with a tight process, the latest buyer update can still sit in email while Salesforce shows an older version of the deal.","what changed since the last buyer conversation","which deals are starting to slow","what the rep has committed to do next","That's what we've been helping RevOps teams with - making sure emails and meetings land on the right Salesforce records, and flagging deals that may be starting to slow.","Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?","Best,
+Sijhah","Subject: deal context
+
+Hi Martin,
+
+Saw that you look after GTM planning and the comp side of things at Cloudflare. That work probably lives or dies on how clean the underlying deal data is.
+
+But even with a tight process, the latest buyer update can still sit in email while Salesforce shows an older version of the deal.
+
+So, usually, there are three things the team needs to know:
+
+- what changed since the last buyer conversation
+- which deals are starting to slow
+- what the rep has committed to do next
+
+That's what we've been helping RevOps teams with - making sure emails and meetings land on the right Salesforce records, and flagging deals that may be starting to slow.
+
+Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?
+
+Best,
 Sijhah","Remit-based opener (no first-party quote); kept soft."
 "Narayanan","Cloudflare","narayanan@cloudflare.com","SEND-READY","account context","Hi Narayanan,","Was reading that you recently stepped into a wider Revenue Strategy & Operations role at Cloudflare, now covering the post-sale side too. That probably means you're seeing customer success and services handoffs from one view for the first time.","And in a handoff, the latest customer update can still sit in email while Salesforce shows an older version of the account.","what changed since the last customer update","which accounts may be starting to slow","what the next owner needs to do","That's what we've been helping revenue teams with - making sure emails and meetings land on the right Salesforce records, and flagging accounts that may be starting to slow.","Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?","Best,
+Sijhah","Subject: account context
+
+Hi Narayanan,
+
+Was reading that you recently stepped into a wider Revenue Strategy & Operations role at Cloudflare, now covering the post-sale side too. That probably means you're seeing customer success and services handoffs from one view for the first time.
+
+And in a handoff, the latest customer update can still sit in email while Salesforce shows an older version of the account.
+
+So, usually, there are three things the team needs to know:
+
+- what changed since the last customer update
+- which accounts may be starting to slow
+- what the next owner needs to do
+
+That's what we've been helping revenue teams with - making sure emails and meetings land on the right Salesforce records, and flagging accounts that may be starting to slow.
+
+Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?
+
+Best,
 Sijhah","Signal: verified Apr 2026 promotion into post-sale scope."
 "Sarah","Galileo","sarah@galileo.ai","SEND-READY","pipeline context","Hi Sarah,","Was looking at your move into Head of RevOps at Galileo, on top of the Salesforce admin background you've built up. That probably means you're setting up the CRM to be the source of truth from day one.","But even with a clean setup, the newest buyer update can still sit in someone's inbox while Salesforce shows an older version of the deal.","what changed since the last buyer conversation","which deals are starting to lose momentum","what the rep has committed to do next","That's what we've been helping RevOps teams with - making sure emails and meetings land on the right Salesforce records automatically, and flagging deals that may be starting to slow.","Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?","Best,
+Sijhah","Subject: pipeline context
+
+Hi Sarah,
+
+Was looking at your move into Head of RevOps at Galileo, on top of the Salesforce admin background you've built up. That probably means you're setting up the CRM to be the source of truth from day one.
+
+But even with a clean setup, the newest buyer update can still sit in someone's inbox while Salesforce shows an older version of the deal.
+
+So, usually, there are three things the team needs to know:
+
+- what changed since the last buyer conversation
+- which deals are starting to lose momentum
+- what the rep has committed to do next
+
+That's what we've been helping RevOps teams with - making sure emails and meetings land on the right Salesforce records automatically, and flagging deals that may be starting to slow.
+
+Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?
+
+Best,
 Sijhah","Signal: verified job change + first-party Salesforce cert on profile."
 "Scott","Snap Finance","smarshall@snapfinance.com","SEND-READY","deal context","Hi Scott,","Was reading about the sales performance work you built natively in Salesforce at Snap Finance. That probably means the team already leans on Salesforce for most of the day-to-day.","But even then, one buyer update can still sit in email while Salesforce shows an older version of the deal.","what changed since the last buyer conversation","which deals are starting to lose momentum","what the rep has committed to do next","That's what we've been helping revenue teams with - making sure emails and meetings land on the right Salesforce records, and flagging deals that may be starting to slow.","Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?","Best,
+Sijhah","Subject: deal context
+
+Hi Scott,
+
+Was reading about the sales performance work you built natively in Salesforce at Snap Finance. That probably means the team already leans on Salesforce for most of the day-to-day.
+
+But even then, one buyer update can still sit in email while Salesforce shows an older version of the deal.
+
+So, usually, there are three things the team needs to know:
+
+- what changed since the last buyer conversation
+- which deals are starting to lose momentum
+- what the rep has committed to do next
+
+That's what we've been helping revenue teams with - making sure emails and meetings land on the right Salesforce records, and flagging deals that may be starting to slow.
+
+Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?
+
+Best,
 Sijhah","Signal: verified case-study quote (Salesforce-native SPM)."
 "Brett","Nitrogen","broberts@nitrogenwealth.com","HOLD-recommended","pipeline context","Hi Brett,","Looks like Nitrogen runs on Salesforce alongside the advisor tools. Leading RevOps there probably means you spend a fair bit of time keeping that CRM data clean.","But even then, the latest buyer update can still sit in email while Salesforce shows an older version of the deal.","what changed since the last buyer conversation","which deals are starting to lose momentum","what the rep has committed to do next","That's what we've been helping RevOps teams with - making sure emails and meetings land on the right Salesforce records, and flagging deals that may be starting to slow.","Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?","Best,
+Sijhah","Subject: pipeline context
+
+Hi Brett,
+
+Looks like Nitrogen runs on Salesforce alongside the advisor tools. Leading RevOps there probably means you spend a fair bit of time keeping that CRM data clean.
+
+But even then, the latest buyer update can still sit in email while Salesforce shows an older version of the deal.
+
+So, usually, there are three things the team needs to know:
+
+- what changed since the last buyer conversation
+- which deals are starting to lose momentum
+- what the rep has committed to do next
+
+That's what we've been helping RevOps teams with - making sure emails and meetings land on the right Salesforce records, and flagging deals that may be starting to slow.
+
+Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?
+
+Best,
 Sijhah","HOLD: company-level signal only, no personal/first-party hook. Copy provided but weak per instruction."
-"Daren","","daren.delaney@morganstanley.com","HOLD","","","","","","","","","","","HOLD: research says title/company are stale - now Executive Director, Finance at Morgan Stanley (since 2022), not RevOps at CI Eaton Vance. Role/context outdated; no send-ready angle."
+"Daren","","daren.delaney@morganstanley.com","HOLD","","","","","","","","","","","","HOLD: research says title/company are stale - now Executive Director, Finance at Morgan Stanley (since 2022), not RevOps at CI Eaton Vance. Role/context outdated; no send-ready angle."
 "Pauline","CBIZ","pauline.dumas@bakertilly.com","SEND-READY","forecast context","Hi Pauline,","Looks like you stepped into leading Revenue Operations at CBIZ at the start of the year. That probably means you're still shaping how the pipeline and forecast come together.","And by forecast time, one missing buyer update can make a deal look different from what's actually happening.","what changed since the last forecast update","which deals are losing buyer activity","what the rep has committed to do next","That's what we've been helping RevOps teams with - keeping the latest emails and meetings in the CRM, and making forecast changes easier to explain.","Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?","Best,
+Sijhah","Subject: forecast context
+
+Hi Pauline,
+
+Looks like you stepped into leading Revenue Operations at CBIZ at the start of the year. That probably means you're still shaping how the pipeline and forecast come together.
+
+And by forecast time, one missing buyer update can make a deal look different from what's actually happening.
+
+So, usually, there are three things the team needs to know:
+
+- what changed since the last forecast update
+- which deals are losing buyer activity
+- what the rep has committed to do next
+
+That's what we've been helping RevOps teams with - keeping the latest emails and meetings in the CRM, and making forecast changes easier to explain.
+
+Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?
+
+Best,
 Sijhah","Salesforce not confirmed at CBIZ - used generic ""CRM"" instead of naming Salesforce."
 "Thuy","Intralinks","thuy.truong@intralinks.com","SEND-READY","pipeline context","Hi Thuy,","Was looking at how Intralinks ties its data room product into Salesforce. Running RevOps around that probably means CRM completeness is something you think about a lot.","But even then, the latest buyer update can still sit in email while Salesforce shows an older version of the deal.","what changed since the last buyer conversation","which deals are starting to lose momentum","what the rep has committed to do next","That's what we've been helping RevOps teams with - making sure emails and meetings land on the right Salesforce records, and flagging deals that may be starting to slow.","Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?","Best,
+Sijhah","Subject: pipeline context
+
+Hi Thuy,
+
+Was looking at how Intralinks ties its data room product into Salesforce. Running RevOps around that probably means CRM completeness is something you think about a lot.
+
+But even then, the latest buyer update can still sit in email while Salesforce shows an older version of the deal.
+
+So, usually, there are three things the team needs to know:
+
+- what changed since the last buyer conversation
+- which deals are starting to lose momentum
+- what the rep has committed to do next
+
+That's what we've been helping RevOps teams with - making sure emails and meetings land on the right Salesforce records, and flagging deals that may be starting to slow.
+
+Can I share a 2-minute video showing how we approach this, just so you can compare it with your current setup?
+
+Best,
 Sijhah","Signal: confirmed company-level Salesforce integration (no first-party quote)."
