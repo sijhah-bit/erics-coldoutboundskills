@@ -82,7 +82,8 @@ These exist because each one produced a wrong email in testing.
 | **Prior role** | Stale topics | *"forecasting… among his responsibilities in **prior role**"* — dropped, since it describes a job they left. |
 | **Corp doc** | Earnings/job reqs as quotes | An earnings release "explicitly highlights…" was being read as the person speaking. |
 | **Direction** | Who acquired whom | Only used when the brief makes direction unambiguous; otherwise skipped. |
-| **Amount context** | Investment ≠ funding | Kirkland & Ellis **investing** $500M in AI would have become "raised $500M." Now requires `raised / secured / closed`. |
+| **Amount context** | Investment ≠ funding | Kirkland & Ellis **investing** $500M in AI would have become "raised $500M." Requires `raised / secured / closed`. |
+| **Not-a-raise** | Acquisitions, funds, AUM read as raises | HPE's **$14B acquisition of** Juniper became "Juniper raised $14B"; a $3.25B hyperscale **fund** and $7.3B of **AUM** became raises too. Now excluded outright. |
 
 ---
 
@@ -98,7 +99,7 @@ A row is held when **any** applies:
    Stanley since 2022.
 5. **No concrete signal** — the only possible opener would be generic title copy.
 
-Rule 5 is the big one: it is why HOLD went from 358 to 1,695. Those rows are exactly
+Rule 5 is the big one: it is why HOLD went from 358 to 1,721. Those rows are exactly
 the ones that produced *"Was reading a bit about the revenue operations side of
 things at Siteminder"* — an opener that references nothing.
 
@@ -108,9 +109,9 @@ things at Siteminder"* — an opener that references nothing.
 
 | Status | Count | Meaning |
 |---|---:|---|
-| `SEND-READY` | 2,178 | Tier A or B signal, or funding. Personal and specific. |
-| `REVIEW` | 948 | Tier C only. Accurate, but about the company, not the person. |
-| `HOLD` | 1,695 | Blank copy + a reason in `notes`. |
+| `SEND-READY` | 2,142 | Tier A or B signal, or funding. Personal and specific. |
+| `REVIEW` | 958 | Tier C only. Accurate, but about the company, not the person. |
+| `HOLD` | 1,721 | Blank copy + a reason in `notes`. |
 
 **[my call]** `funding` counts as SEND-READY even though it's a company fact — a
 fresh raise is specific, dated, and genuinely changes the reader's week. Move it to
@@ -129,10 +130,11 @@ It must not restate the signal.
 
 The turn works when S2 ends on an expectation and the problem breaks it:
 
-> Looks like Salesforce is the system of record across Alegeus. **So that's where
-> everyone goes to check where a deal stands.**
+> Looks like Salesforce is the system of record across Alegeus. **That probably means
+> it's the first place anyone looks to see where a deal stands.**
 >
-> **But someone has to remember to log every call and email, so a busy week leaves gaps.**
+> **But even then, a call can happen on Monday and reach the Salesforce record days
+> later, if at all.**
 
 Banned in S2 and the problem line — all were live in an earlier draft:
 
@@ -143,6 +145,7 @@ Banned in S2 and the problem line — all were live in an earlier draft:
 - "where the picture usually goes wrong"
 - "what the pipeline should look like"
 - "a wider angle"
+- a dangling `there` / `here` - "your own view of how deals move **there**" (there where?)
 
 These are enforced by an automated check, not by judgment.
 
@@ -157,10 +160,15 @@ Wording varies by theme:
 
 | Theme | Example |
 |---|---|
-| forecast | "But by forecast time, a deal can still look fine when the last call with the buyer said otherwise." |
-| pipeline | "But the newest thing a buyer said usually sits in someone's email, not in Salesforce." |
-| crm | "But someone has to remember to log every call and email, so a busy week leaves gaps." |
-| account | "And the next owner only sees what the last one remembered to write down." |
+| forecast | "But even then, one missing buyer update can make a deal look different from what's actually happening." |
+| pipeline | "But even then, the latest buyer update can still sit in email while Salesforce shows an older version of the deal." |
+| crm | "But even then, an email or meeting can sit in someone's inbox instead of the record it belongs to." |
+| account | "But even then, the latest customer update can sit in email while Salesforce shows an older version of the account." |
+
+**Both halves are always stated** - where the update actually sits, and what the CRM
+shows. Dropping either half is what made an earlier draft read as unclear
+("an update that never made it into Salesforce can make a deal look safer than it
+is" leaves the reader to work out where the update *is*).
 
 ---
 
@@ -234,6 +242,10 @@ forms are tracked so grammar holds:
   `Cohere` + `coherehealth.com` → **Cohere Health**. This matters: Cohere is a
   different, well-known company. Same fix gives Janus Henderson, Cars Commerce.
   A recovered name can never re-add a legal suffix (`foxcorporation.com` stays `Fox`).
+- **Casing repair**: the export mangles some names - `Gep` for gep.com, `Bwh` for
+  bwh.com, `Global pay`, and `Dun` for Dun & Bradstreet. Short acronyms matching their
+  own domain are uppercased, lower-cased words are capitalised, and a truncated
+  ampersand name is recovered from the brief.
 
 ---
 
@@ -262,7 +274,8 @@ clean.
 
 **Language** — no banned CTA wording · no banned openers ("I noticed", "Given your
 role") · no forced praise ("impressive", "amazing") · no gendered pronouns in copy ·
-no banned vague phrases · no sentence over 26 words.
+no banned vague phrases · no dangling `there`/`here` · subject-verb agreement on
+compound topics ("forecasting and pipeline **take** up") · no sentence over 26 words.
 
 **Data** — no legal suffix left in company · company name ≤ 3 words · first name
 usable.

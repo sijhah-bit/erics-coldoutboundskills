@@ -56,6 +56,13 @@ P_NEW = re.compile(r"\b(recent(?:ly)? job change|fresh(?:ly)? job change|new in 
                    r"|recently (?:joined|moved|stepped|started)|joined [A-Z][\w&.\- ]{1,30} (?:as|in)\b"
                    r"|stepped into|moved into|started (?:as|in) )", re.I)
 
+# A dollar figure near "closed" is NOT automatically a funding round. These all
+# produced false claims: HPE's $14B *acquisition of* Juniper became "Juniper
+# raised $14B"; a $3.25B hyperscale *fund* and $7.3B of *AUM* became raises too.
+NOT_A_RAISE = re.compile(r"\b(acqui(?:red|sition|ring)|merger|merged|takeover|bought"
+                         r"|AUM|assets under management|\bfund\b|flagship fund"
+                         r"|revenue of|revenue|valuation of|market cap|buyback"
+                         r"|contract|deal value|IPO)\b", re.I)
 RAISED = re.compile(r"\b(raised|secured|closed)\b[^.]{0,60}?(\$\s?\d[\d.,]*\s?(?:M|B|million|billion)|Series\s+[A-F])", re.I)
 SERIES_LOOSE = re.compile(r"\b(raised|closed|secured)[^.]{0,40}\bSeries\s+([A-F])\b", re.I)
 SERIES_ONLY = re.compile(r"\bSeries\s+([A-F])\b[^.]{0,40}\b(funding|round|raise|investment)\b", re.I)
@@ -130,6 +137,31 @@ def domain_core(d):
     return p[0] if p and p[0] else ""
 
 
+def tidy_case(name, website, brief):
+    """Repair casing/fragments the source export mangled.
+
+    The export contains 'Gep' for gep.com, 'Bwh' for bwh.com and 'Global pay'
+    for globalpay.com - acronyms title-cased and words lower-cased.
+    """
+    if not name:
+        return name
+    sc = domain_core(website)
+    flat = re.sub(r"[^a-z0-9]", "", name.lower())
+    # short acronym that matches its own domain -> uppercase it (Gep -> GEP)
+    if " " not in name and len(name) <= 4 and flat and flat == sc and not name.isupper():
+        return name.upper()
+    # recover an ampersand name the export truncated (Dun -> Dun & Bradstreet)
+    if " " not in name:
+        m = re.search(rf"\b{re.escape(name)}\s*&\s*([A-Z][A-Za-z]+)\b", brief)
+        if m:
+            return f"{name} & {m.group(1)}"
+    # capitalise lower-cased words in a multi-word name (Global pay -> Global Pay)
+    if " " in name:
+        parts = [w if (w.isupper() or w[:1].isupper()) else w.capitalize() for w in name.split()]
+        return " ".join(parts)
+    return name
+
+
 def resolve_company(raw, website, brief):
     """Recover a truncated company name using the website + research brief.
 
@@ -153,6 +185,10 @@ def resolve_company(raw, website, brief):
         if re.sub(r"[^a-z0-9]", "", cand.lower()) == sc:
             return cand
     return base
+
+
+def final_company(raw, website, brief):
+    return tidy_case(resolve_company(raw, website, brief), website, brief)
 
 
 def email_domain_flag(email, website):
@@ -287,6 +323,8 @@ def extract(row):
 
     # Tier C - company fact
     for s in clean:
+        if NOT_A_RAISE.search(s):
+            continue  # acquisition / fund / AUM figure, not money the company raised
         if RAISED.search(s) or SERIES_LOOSE.search(s) or SERIES_ONLY.search(s):
             amt, ser = MONEY.search(s), re.search(r"\bSeries\s+([A-F])\b", s)
             res.update(kind="funding", evidence=s,
@@ -361,8 +399,11 @@ def build_opener(kind, extra, first, company, remit, key, crm_n):
                               f"That probably means the team runs most of the day to day out of {crm_n}."])
         return s1, s2, "crm"
     if kind == "profile":
-        vb = "are" if " and " in topic else "is"
-        s1 = f"I read that {topic} {vb} a big part of what you look after." if topic else \
+        # "I read that the CRM side of things is a big part of what you look after"
+        # is stiff and passive; put the reader in the sentence instead.
+        tv = "take" if " and " in topic else "takes"   # "forecasting and pipeline take up..."
+        s1 = pick(key, "s1t", [f"Looks like you spend a lot of your time on {topic}.",
+                               f"Looks like {topic} {tv} up a good part of your week."]) if topic else \
              pick(key, "s1", [f"Looks like you've spent a lot of your career around {remit}.",
                               f"Looks like {remit} has been your patch for a while now."])
         s2 = pick(key, "s2", ["That probably means you see the numbers before anyone else does.",
@@ -443,8 +484,8 @@ out, stats, kinds = [], {}, {}
 for r in rows:
     email = (r.get("WorkEmail") or "").strip()
     first = clean_first(r.get("first_name"))
-    company = resolve_company(r.get("company_name"), r.get("website"),
-                              (r.get("Research Brief") or "") + " " + (r.get("Reasoning") or ""))
+    company = final_company(r.get("company_name"), r.get("website"),
+                            (r.get("Research Brief") or "") + " " + (r.get("Reasoning") or ""))
     dflag = email_domain_flag(email, r.get("website"))
     func = (r.get("function") or "").strip()
     cat = (r.get("category") or "").strip()
