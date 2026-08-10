@@ -332,7 +332,7 @@ def build_opener(kind, extra, first, company, remit, key, crm_n):
                               f"Was looking at your move into {remit} at {company}.",
                               f"Looks like you stepped into the {remit} seat at {company} recently.",
                               f"Saw you joined the {remit} side at {company} not long back."])
-        s2 = pick(key, "s2", ["That probably means you're still building your own view of how deals move there.",
+        s2 = pick(key, "s2", ["That probably means you're still building your own picture of how deals actually move.",
                               "You've probably spent a lot of that time working out where the numbers come from.",
                               "That probably means you're still shaping how the forecast gets put together.",
                               "That probably means you're getting a first proper look at the whole pipeline."])
@@ -384,7 +384,7 @@ def build_opener(kind, extra, first, company, remit, key, crm_n):
         if amt and ser: what = f"raised a {amt} Series {ser}"
         s1 = f"I read that {company} {what}."
         s2 = pick(key, "s2", ["That probably means more reps and more deals in a short space of time.",
-                              "That probably means the team is growing faster than the process around it.",
+                              "That probably means new reps are joining faster than the process can settle.",
                               "That probably means a lot more deals moving than a year ago."])
         return s1, s2, "pipeline"
     if kind == "acq_target":
@@ -402,14 +402,14 @@ def build_opener(kind, extra, first, company, remit, key, crm_n):
         # always that the company built it into its own product.
         s1 = pick(key, "s1", [f"Looks like Salesforce is woven into how {company} works.",
                               f"Looks like {company} is tied into Salesforce fairly closely."])
-        s2 = pick(key, "s2", ["That probably means most of what the team knows about a deal is meant to sit there.",
-                              "That probably makes it the first place anyone checks where a deal stands."])
+        s2 = pick(key, "s2", ["That probably means the team expects one place to show where every deal stands.",
+                              "That probably means it's the first place anyone looks to see where a deal stands."])
         return s1, s2, "crm"
     if kind == "sf_sor":
         s1 = pick(key, "s1", [f"Looks like Salesforce is the system of record across {company}.",
                               f"Looks like {company} runs the go-to-market side on Salesforce."])
-        s2 = pick(key, "s2", ["That probably means most of what the team knows about a deal is meant to sit there.",
-                              "That probably makes it the first place anyone checks where a deal stands."])
+        s2 = pick(key, "s2", ["That probably means the team expects one place to show where every deal stands.",
+                              "That probably means it's the first place anyone looks to see where a deal stands."])
         return s1, s2, "crm"
     if kind == "hiring":
         s1 = pick(key, "s1", [f"I read that {company} has been hiring across the sales side.",
