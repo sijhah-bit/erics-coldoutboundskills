@@ -268,6 +268,9 @@ SUBJECT = {"forecast":"forecast context","pipeline":"pipeline context","crm":"cr
            "account":"account context","enablement":"deal context"}
 def help_line(theme, team, crm_n, crm_a):
     """crm_n = noun form ('Salesforce' / 'the CRM'); crm_a = attributive ('Salesforce' / 'CRM')."""
+    # telling "account teams" we flag *deals* reads off; keep the noun aligned
+    if team == "account teams" and theme in ("pipeline", "crm", "enablement"):
+        theme = "account"
     return {
  "forecast":  f"That's what we've been helping {team} with - keeping the latest emails and meetings in {crm_n}, and making forecast changes easier to explain.",
  "pipeline":  f"That's what we've been helping {team} with - making sure emails and meetings land on the right {crm_a} records, and flagging deals that may be starting to slow.",
@@ -487,7 +490,7 @@ def build_opener(kind, extra, first, company, remit, key, crm_n, recent=False):
         # Kept deliberately soft: the research confirms a Salesforce tie-in, not
         # always that the company built it into its own product.
         s1 = pick(key, "s1", [f"Looks like Salesforce is woven into how {company} works.",
-                              f"Looks like {company} is tied into Salesforce fairly closely."])
+                              f"Looks like Salesforce is tied fairly closely into how {company} runs."])
         s2 = pick(key, "s2", ["That probably means the team expects one place to show where every deal stands.",
                               "That probably means it's the first place anyone looks to see where a deal stands."])
         return s1, s2, "crm"
