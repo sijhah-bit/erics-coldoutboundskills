@@ -210,23 +210,27 @@ def help_line(theme, team, crm_n, crm_a):
     }[theme]
 
 def problem_line(theme, crm_n, crm_a, key):
-    """One plain, concrete idea per line. No abstractions like 'the older story'."""
+    """Both halves stated explicitly - where the update IS, and what the CRM shows.
+
+    Dropping either half forces the reader to fill in the gap, which is what made
+    earlier drafts read as unclear. This follows the benchmark wording directly.
+    """
     return pick(key, "prob", {
- "forecast": [f"But the last thing a buyer said usually sits in someone's email, not in {crm_n}.",
-              f"And an update that never made it into {crm_n} can make a deal look safer than it is.",
-              f"But by forecast time, a deal can still look fine when the last call with the buyer said otherwise."],
- "pipeline": [f"But the newest thing a buyer said usually sits in someone's email, not in {crm_n}.",
-              f"And the update that would change your mind on a deal is often still sitting in an inbox.",
-              f"But what a buyer said last week can stay in email, so {crm_n} still shows last month's version."],
- "crm":      [f"But the emails and meetings that show what's really happening don't always reach the record.",
-              f"But the newest update from a buyer often never lands on the {crm_a} record it belongs to.",
-              f"But someone has to remember to log every call and email, so a busy week leaves gaps."],
- "account":  [f"But what a customer last agreed can sit in one person's email instead of {crm_n}.",
-              f"And the next owner only sees what the last one remembered to write down.",
-              f"But the last real conversation with a customer often never reaches the account record."],
- "enablement":[f"But the newest thing a buyer said usually sits in a rep's email, not in {crm_n}.",
-               f"But someone has to remember to log every call and email, so a busy week leaves gaps.",
-               f"But what a buyer said last week can stay in email, so {crm_n} still shows the older version."],
+ "forecast": [f"But even then, one missing buyer update can make a deal look different from what's actually happening.",
+              f"And by forecast time, the latest buyer update can still sit in email while {crm_n} shows an older version of the deal.",
+              f"But even with a good process, one buyer update can sit in email and the forecast still reads the old way."],
+ "pipeline": [f"But even then, the latest buyer update can still sit in email while {crm_n} shows an older version of the deal.",
+              f"But even then, one buyer update can sit in someone's inbox while {crm_n} shows the older picture.",
+              f"And the newest update from a buyer can stay in email while {crm_n} still shows last month's version."],
+ "crm":      [f"But even then, an email or meeting can sit in someone's inbox instead of the record it belongs to.",
+              f"But even with a tidy setup, the latest buyer update can sit in email while the {crm_a} record shows an older version.",
+              f"But even then, a call can happen on Monday and reach the {crm_a} record days later, if at all."],
+ "account":  [f"But even then, the latest customer update can sit in email while {crm_n} shows an older version of the account.",
+              f"But even then, what a customer last agreed can sit in one person's email while {crm_n} shows the older picture.",
+              f"And in a handover, the last real conversation can stay in email while the account record shows an older version."],
+ "enablement":[f"But even with a strong process, one buyer update can sit in a rep's email while {crm_n} shows an older version of the deal.",
+               f"But even then, the latest buyer update can sit in email while {crm_n} shows the older picture.",
+               f"And what a buyer said last week can stay in a rep's inbox while {crm_n} still shows the older version."],
     }[theme])
 
 
@@ -314,62 +318,62 @@ def build_opener(kind, extra, first, company, remit, key, crm_n):
     """Return (sentence1, sentence2, theme). Sentence 2 must follow from sentence 1."""
     topic = (extra or {}).get("topic", "")
     if kind == "promotion":
-        s1 = pick(key, "s1", [f"Saw you picked up a wider remit at {company} recently.",
-                              f"Looks like you took on more of the {remit} side at {company}.",
-                              f"Saw your patch at {company} got bigger recently.",
+        s1 = pick(key, "s1", [f"I read that you took on a wider remit at {company} recently.",
+                              f"Saw you now look after more of the {remit} side at {company}.",
+                              f"I read that your patch at {company} got wider recently.",
                               f"Looks like more of {remit} at {company} sits with you now."])
-        s2 = pick(key, "s2", ["So more of the forecast probably lands on you now.",
-                              "So you're probably answering for more deals than you used to.",
-                              "That usually means more deals to keep an eye on than before.",
-                              "So the number probably stops with you now."])
+        s2 = pick(key, "s2", ["That probably means more of the forecast sits with you now.",
+                              "That probably means you answer for more deals than you used to.",
+                              "That probably means more deals to keep an eye on than before.",
+                              "That probably means the number stops with you now."])
         return s1, s2, "forecast"
     if kind == "newrole":
-        s1 = pick(key, "s1", [f"Looks like you stepped into the {remit} seat at {company} fairly recently.",
+        s1 = pick(key, "s1", [f"I read that you moved into {remit} at {company} recently.",
                               f"Was looking at your move into {remit} at {company}.",
-                              f"Looks like you're still fairly new in the {remit} seat at {company}.",
-                              f"Saw you moved across into {remit} at {company} not too long ago."])
-        s2 = pick(key, "s2", ["So you're probably still working out which numbers you can trust.",
-                              "You're probably still getting a feel for how deals really move there.",
-                              "So you've likely spent a lot of that time checking where the numbers come from.",
-                              "You're probably still learning which deals are real and which ones aren't."])
+                              f"Looks like you stepped into the {remit} seat at {company} recently.",
+                              f"Saw you joined the {remit} side at {company} not long back."])
+        s2 = pick(key, "s2", ["That probably means you're still building your own view of how deals move there.",
+                              "You've probably spent a lot of that time working out where the numbers come from.",
+                              "That probably means you're still shaping how the forecast gets put together.",
+                              "That probably means you're getting a first proper look at the whole pipeline."])
         return s1, s2, "forecast"
     if kind == "spoke":
         med = (extra or {}).get("medium", "interview")
         s1 = f"Was listening to the {med} you did about {topic}." if topic else \
              pick(key, "s1", [f"Was listening to {art(med)} {med} you did.",
                               f"Came across {art(med)} {med} you took part in."])
-        s2 = pick(key, "s2", ["So you've clearly spent a lot of time thinking about how deals get tracked.",
-                              "So you've probably seen how quickly the story behind a deal gets scattered.",
-                              "You've likely got strong views on where deal data breaks down."])
+        s2 = pick(key, "s2", ["That probably means you've seen how quickly the story behind a deal gets scattered.",
+                              "You've probably thought about how deals get tracked more than most people do.",
+                              "That probably means you know where deal data tends to break down."])
         return s1, s2, "pipeline"
     if kind == "authored":
         s1 = f"Was reading the piece you wrote about {topic}." if topic else \
              pick(key, "s1", ["Was reading a piece you'd written.",
                               "Came across something you'd published."])
-        s2 = pick(key, "s2", ["So you've clearly spent a lot of time thinking about how deals get tracked.",
-                              "You've probably seen how quickly the story behind a deal gets scattered."])
+        s2 = pick(key, "s2", ["That probably means you've seen how quickly the story behind a deal gets scattered.",
+                              "You've probably thought about how deals get tracked more than most people do."])
         return s1, s2, "pipeline"
     if kind == "casestudy":
         s1 = f"Was reading the case study where you talked about {topic}." if topic else \
              pick(key, "s1", ["Was reading a case study you were quoted in.",
                               "Came across a case study with your comments in it."])
-        s2 = pick(key, "s2", [f"Sounds like {crm_n} is already where the team keeps everything.",
-                              f"So the team clearly runs most of the day to day out of {crm_n}."])
+        s2 = pick(key, "s2", [f"That probably means {crm_n} is already central to how the team works.",
+                              f"That probably means the team runs most of the day to day out of {crm_n}."])
         return s1, s2, "crm"
     if kind == "profile":
         vb = "are" if " and " in topic else "is"
-        s1 = f"Looks like {topic} {vb} a big part of your week." if topic else \
+        s1 = f"I read that {topic} {vb} a big part of what you look after." if topic else \
              pick(key, "s1", [f"Looks like you've spent a lot of your career around {remit}.",
                               f"Looks like {remit} has been your patch for a while now."])
-        s2 = pick(key, "s2", ["So you probably spot it quickly when the numbers stop matching what reps are saying.",
-                              "You've likely got a good feel for which deals are real and which ones aren't.",
-                              "So you're probably the one who notices first when a deal isn't what it looks like."])
+        s2 = pick(key, "s2", ["That probably means you see the numbers before anyone else does.",
+                              "That probably keeps you close to how deals are really moving.",
+                              "That probably means you notice first when a deal isn't what it looks like."])
         return s1, s2, "pipeline"
     if kind == "cert":
-        s1 = pick(key, "s1", [f"Looks like you hold a Salesforce admin cert on top of running {remit} at {company}.",
+        s1 = pick(key, "s1", [f"I read that you hold a Salesforce admin cert on top of running {remit} at {company}.",
                               f"Saw you handle the Salesforce admin side yourself at {company}."])
-        s2 = pick(key, "s2", ["So you probably see the gaps in the data before anyone else does.",
-                              "So you know better than most how clean that data really is."])
+        s2 = pick(key, "s2", ["That probably means you see the gaps in the data before anyone else does.",
+                              "That probably means you know better than most how clean that data really is."])
         return s1, s2, "crm"
     if kind == "funding":
         amt, ser = (extra or {}).get("amount", ""), (extra or {}).get("series", "")
@@ -378,40 +382,40 @@ def build_opener(kind, extra, first, company, remit, key, crm_n):
         elif ser:       what = f"raised a Series {ser}"
         else:           what = "closed a new round"
         if amt and ser: what = f"raised a {amt} Series {ser}"
-        s1 = f"Saw {company} {what}."
-        s2 = pick(key, "s2", ["That usually means more reps and more deals in a short space of time.",
-                              "So the team is probably growing faster than the process around it.",
-                              "That usually means a lot more deals moving than a year ago."])
+        s1 = f"I read that {company} {what}."
+        s2 = pick(key, "s2", ["That probably means more reps and more deals in a short space of time.",
+                              "That probably means the team is growing faster than the process around it.",
+                              "That probably means a lot more deals moving than a year ago."])
         return s1, s2, "pipeline"
     if kind == "acq_target":
-        s1 = f"Saw {company} was acquired."
-        s2 = pick(key, "s2", ["That usually means a lot of accounts changing hands at once.",
-                              "So a fair few accounts are probably moving between owners right now."])
+        s1 = f"I read that {company} was acquired."
+        s2 = pick(key, "s2", ["That probably means a lot of accounts changing hands at once.",
+                              "That probably means a fair few accounts are moving between owners right now."])
         return s1, s2, "account"
     if kind == "acq_buyer":
-        s1 = f"Saw {company} has been picking up other businesses."
-        s2 = pick(key, "s2", ["That usually means a lot of accounts changing hands at once.",
-                              "So new accounts keep landing with people who weren't on the original deal."])
+        s1 = f"I read that {company} has been buying up other businesses."
+        s2 = pick(key, "s2", ["That probably means a lot of accounts changing hands at once.",
+                              "That probably means new accounts keep landing with people who weren't on the original deal."])
         return s1, s2, "account"
     if kind == "sf_integration":
         # Kept deliberately soft: the research confirms a Salesforce tie-in, not
         # always that the company built it into its own product.
-        s1 = pick(key, "s1", [f"Looks like Salesforce is pretty woven into how {company} works.",
+        s1 = pick(key, "s1", [f"Looks like Salesforce is woven into how {company} works.",
                               f"Looks like {company} is tied into Salesforce fairly closely."])
-        s2 = pick(key, "s2", ["So most of what the team knows about a deal is meant to live there.",
-                              "So that's where everyone goes to check where a deal stands."])
+        s2 = pick(key, "s2", ["That probably means most of what the team knows about a deal is meant to sit there.",
+                              "That probably makes it the first place anyone checks where a deal stands."])
         return s1, s2, "crm"
     if kind == "sf_sor":
         s1 = pick(key, "s1", [f"Looks like Salesforce is the system of record across {company}.",
                               f"Looks like {company} runs the go-to-market side on Salesforce."])
-        s2 = pick(key, "s2", ["So most of what the team knows about a deal is meant to live there.",
-                              "So that's where everyone goes to check where a deal stands."])
+        s2 = pick(key, "s2", ["That probably means most of what the team knows about a deal is meant to sit there.",
+                              "That probably makes it the first place anyone checks where a deal stands."])
         return s1, s2, "crm"
     if kind == "hiring":
-        s1 = pick(key, "s1", [f"Saw {company} has been hiring across the sales side.",
+        s1 = pick(key, "s1", [f"I read that {company} has been hiring across the sales side.",
                               f"Looks like {company} has been adding reps lately."])
-        s2 = pick(key, "s2", ["That usually means more deals to keep track of than the team is used to.",
-                              "So there are probably a lot of new reps learning the process at once."])
+        s2 = pick(key, "s2", ["That probably means more deals to keep track of than the team is used to.",
+                              "That probably means a lot of new reps learning the process at once."])
         return s1, s2, "forecast"
     return None, None, None
 
