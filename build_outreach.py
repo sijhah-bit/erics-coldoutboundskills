@@ -137,6 +137,37 @@ def domain_core(d):
     return p[0] if p and p[0] else ""
 
 
+# "recently" is a factual claim the reader can check. The export was calling a
+# May-2024 job change "not long back" in Aug 2026 - 26 months. Only say it when
+# the evidence carries a date inside RECENCY_MONTHS.
+TODAY_Y, TODAY_M = 2026, 8
+RECENCY_MONTHS = 18
+MONTHS = {m: i + 1 for i, m in enumerate(
+    ["january","february","march","april","may","june","july","august",
+     "september","october","november","december"])}
+DATE_ISO = re.compile(r"\b(20\d\d)-(\d\d)-\d\d\b")
+DATE_MON = re.compile(r"\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+(20\d\d)\b", re.I)
+DATE_YR = re.compile(r"\b(?:in|since|during)\s+(20\d\d)\b", re.I)
+
+
+def evidence_age_months(text):
+    """Youngest date mentioned, in months before today. None when undated."""
+    ages = []
+    for m in DATE_ISO.finditer(text or ""):
+        ages.append((TODAY_Y - int(m.group(1))) * 12 + (TODAY_M - int(m.group(2))))
+    for m in DATE_MON.finditer(text or ""):
+        ages.append((TODAY_Y - int(m.group(2))) * 12 + (TODAY_M - MONTHS[m.group(1).lower()]))
+    for m in DATE_YR.finditer(text or ""):
+        ages.append((TODAY_Y - int(m.group(1))) * 12 + (TODAY_M - 6))
+    ages = [a for a in ages if a >= -2]
+    return min(ages) if ages else None
+
+
+def is_recent(evidence):
+    age = evidence_age_months(evidence)
+    return age is not None and age <= RECENCY_MONTHS
+
+
 def tidy_case(name, website, brief):
     """Repair casing/fragments the source export mangled.
 
@@ -352,28 +383,40 @@ def art(word):
     return "an" if word[:1].lower() in "aeiou" else "a"
 
 
-def build_opener(kind, extra, first, company, remit, key, crm_n):
-    """Return (sentence1, sentence2, theme). Sentence 2 must follow from sentence 1."""
+def build_opener(kind, extra, first, company, remit, key, crm_n, recent=False):
+    """Return (sentence1, sentence2, theme). Sentence 2 must follow from sentence 1.
+
+    `recent` gates any wording that claims the event was recent.
+    """
     topic = (extra or {}).get("topic", "")
     if kind == "promotion":
-        s1 = pick(key, "s1", [f"I read that you took on a wider remit at {company} recently.",
-                              f"Saw you now look after more of the {remit} side at {company}.",
-                              f"I read that your patch at {company} got wider recently.",
-                              f"Looks like more of {remit} at {company} sits with you now."])
+        opts = [f"Saw you now look after more of the {remit} side at {company}.",
+                f"Looks like more of {remit} at {company} sits with you now."]
+        if recent:
+            opts += [f"I read that you took on a wider remit at {company} recently.",
+                     f"I read that your patch at {company} got wider recently."]
+        s1 = pick(key, "s1", opts)
         s2 = pick(key, "s2", ["That probably means more of the forecast sits with you now.",
                               "That probably means you answer for more deals than you used to.",
                               "That probably means more deals to keep an eye on than before.",
                               "That probably means the number stops with you now."])
         return s1, s2, "forecast"
     if kind == "newrole":
-        s1 = pick(key, "s1", [f"I read that you moved into {remit} at {company} recently.",
-                              f"Was looking at your move into {remit} at {company}.",
-                              f"Looks like you stepped into the {remit} seat at {company} recently.",
-                              f"Saw you joined the {remit} side at {company} not long back."])
-        s2 = pick(key, "s2", ["That probably means you're still building your own picture of how deals actually move.",
-                              "You've probably spent a lot of that time working out where the numbers come from.",
-                              "That probably means you're still shaping how the forecast gets put together.",
-                              "That probably means you're getting a first proper look at the whole pipeline."])
+        opts = [f"Was looking at your move into {remit} at {company}.",
+                f"I read that you moved into {remit} at {company}."]
+        if recent:
+            opts += [f"Looks like you stepped into the {remit} seat at {company} recently.",
+                     f"Saw you joined the {remit} side at {company} not long back."]
+        s1 = pick(key, "s1", opts)
+        # "still building" only holds if the move was actually recent
+        s2opts = ["That probably means you see the whole pipeline, not just one part of it.",
+                  "You've probably worked out by now where the numbers really come from."]
+        if recent:
+            s2opts = ["That probably means you're still building your own picture of how deals actually move.",
+                      "You've probably spent a lot of that time working out where the numbers come from.",
+                      "That probably means you're still shaping how the forecast gets put together.",
+                      "That probably means you're getting a first proper look at the whole pipeline."]
+        s2 = pick(key, "s2", s2opts)
         return s1, s2, "forecast"
     if kind == "spoke":
         med = (extra or {}).get("medium", "interview")
@@ -430,8 +473,10 @@ def build_opener(kind, extra, first, company, remit, key, crm_n):
         return s1, s2, "pipeline"
     if kind == "acq_target":
         s1 = f"I read that {company} was acquired."
+        # "right now" would be false for a deal that closed years ago
         s2 = pick(key, "s2", ["That probably means a lot of accounts changing hands at once.",
-                              "That probably means a fair few accounts are moving between owners right now."])
+                              "That probably means a fair few accounts are moving between owners right now."]) \
+             if recent else "That probably means a lot of accounts changed hands along the way."
         return s1, s2, "account"
     if kind == "acq_buyer":
         s1 = f"I read that {company} has been buying up other businesses."
@@ -541,8 +586,13 @@ for r in rows:
         out.append(rec); continue
 
     key = email
-    s1, s2, theme = build_opener(kind, e["extra"], first, company, remit, key, crm_n)
+    recent = is_recent(e["evidence"])
+    s1, s2, theme = build_opener(kind, e["extra"], first, company, remit, key, crm_n, recent)
     team = team_for(func, cat)
+    if kind in ("newrole", "promotion", "acq_target") and not recent:
+        age = evidence_age_months(e["evidence"])
+        notes.append(f"event is {age} months old - opener avoids claiming it was recent"
+                     if age is not None else "no date in research - opener avoids claiming recency")
     p1, p2, p3 = POINTS[theme]
     if e["has_quote"]:
         notes.append("first-party material exists - worth dropping their actual words into the opener")
@@ -559,6 +609,24 @@ for r in rows:
     stats[status] = stats.get(status, 0) + 1
     kinds[kind] = kinds.get(kind, 0) + 1
     out.append(rec)
+
+# ---- same human reachable at two addresses (joe.samarco@ and joseph.samarco@) ----
+by_person = {}
+for r, rec in zip(rows, out):
+    last = (r.get("last_name") or "").strip().lower()
+    email = rec["email"]
+    if not last or "@" not in email:
+        continue
+    by_person.setdefault((last, email.split("@")[1].lower()), []).append(rec)
+dupe_people = 0
+for (last, dom), recs in by_person.items():
+    if len(recs) > 1:
+        dupe_people += len(recs)
+        others = ", ".join(sorted(x["email"] for x in recs))
+        for rec in recs:
+            note = f"same surname at this domain, may be one person: {others}"
+            rec["data_flag"] = (rec["data_flag"] + "; " + note) if rec["data_flag"] else note
+print("duplicate-person rows flagged:", dupe_people)
 
 with open(OUT, "w", newline="", encoding="utf-8") as f:
     w = csv.DictWriter(f, fieldnames=cols, quoting=csv.QUOTE_ALL)

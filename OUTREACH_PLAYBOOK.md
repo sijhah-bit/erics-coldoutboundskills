@@ -249,6 +249,19 @@ forms are tracked so grammar holds:
 
 ---
 
+## 13b. Recency is a factual claim
+
+"Recently" / "not long back" is checkable by the reader, so it is only used when the
+research carries a date inside **18 months**. The export was calling a May-2024 job
+change "not long back" in Aug 2026 - 26 months - and one Genesys row was 50 months
+stale. Undated evidence also drops the recency wording, since nothing supports it.
+
+Rows where this applies say so in `notes` ("event is 34 months old - opener avoids
+claiming it was recent"). The same rule stops an acquisition that closed in 2021 from
+being described as accounts "changing hands right now".
+
+---
+
 ## 14. Data quality flag
 
 `data_flag` marks **236 rows** where the email domain doesn't match the company site —
@@ -258,6 +271,11 @@ Nasdaq but her address is `@swisslog.com`.
 **[my call]** Flagged, not held, because some are legitimate subsidiaries
 (`bhnetwork.com` for Blackhawk Network, `visa.com` for CardinalCommerce). Filter these
 before loading into any sender.
+
+`data_flag` also marks **20 rows (10 people)** reachable at two addresses - the same
+surname on the same domain, e.g. `cglastetter@` and `christopher.glastetter@
+insightglobal.com`. Both copies are excluded from the mailable subset so nobody gets
+the same email twice.
 
 ---
 
@@ -271,6 +289,9 @@ rows · greeting matches first name · HOLD rows carry blank copy and a reason.
 **Formatting** — no em/en dashes · no double spaces · no doubled articles
 ("the the") · no `a`/`an` disagreement · no template leakage (`{}`, `None`) · encoding
 clean.
+
+**Facts** — no "recently" without a date inside 18 months · no dollar figure restated
+as a raise unless it really is one.
 
 **Language** — no banned CTA wording · no banned openers ("I noticed", "Given your
 role") · no forced praise ("impressive", "amazing") · no gendered pronouns in copy ·
